@@ -1,0 +1,109 @@
+.home-body-container {
+  min-height: 100vh;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/home-lg-bg.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+@media screen and (max-width: 768px) {
+  .home-body-container {
+    background-image: url('https://assets.ccbp.in/frontend/react-js/home-sm-bg.png');
+    min-height: 621px;
+    background-size: cover;
+    background-position: center;
+    padding-top: 20px;
+  }
+}
+
+.home-content-container {
+  width: 90%;
+}
+
+.home-main-heading {
+  color: white;
+}
+
+.home-description {
+  color: white;
+  margin-top: 30px;
+  max-width: 90%;
+  line-height: 25px;
+}
+
+.find-jobs-button {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  margin-top: 30px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+@media (min-width: 577px) and (max-width: 767px) {
+  .home-main-heading {
+    font-size: 40px;
+    margin-top: 40px;
+    width: 70%;
+  }
+
+  .home-description {
+    font-size: 20px;
+    width: 80%;
+  }
+
+  .find-jobs-button {
+    font-size: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .home-main-heading {
+    font-size: 60px;
+    margin-top: 50px;
+    width: 70%;
+  }
+
+  .home-description {
+    font-size: 25px;
+    width: 80%;
+    line-height: 40px;
+  }
+
+  .find-jobs-button {
+    font-size: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
+
+@media screen and (min-width: 991px) {
+  .home-main-heading {
+    font-size: 90px;
+    width: 70%;
+    margin-top: 80px;
+  }
+
+  .home-description {
+    font-size: 30px;
+    width: 70%;
+    line-height: 50px;
+  }
+
+  .find-jobs-button {
+    font-size: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}

@@ -1,0 +1,23 @@
+.skill-list-item {
+  list-style-type: none;
+  width: 48%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
+  margin-right: 5px;
+}
+
+@media screen and (min-width: 768px) {
+  .skill-list-item {
+    width: 32%;
+  }
+}
+
+.skills-image {
+  width: 50px;
+  margin-right: 20px;
+}
+
+.skill-name {
+  color: white;
+}
