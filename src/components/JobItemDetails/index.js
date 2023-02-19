@@ -1,8 +1,6 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-import {AiFillStar} from 'react-icons/ai'
-import {MdLocationOn} from 'react-icons/md'
-import {BsBriefcaseFill} from 'react-icons/bs'
+
 import Loader from 'react-loader-spinner'
 
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
@@ -25,7 +23,7 @@ class JobItemDetails extends Component {
     similarJobs: [],
     skills: [],
     lifeAtCompany: [],
-    isApiSuccess: true,
+
     isStatus: statusConstants.loading,
   }
 
@@ -34,42 +32,32 @@ class JobItemDetails extends Component {
   }
 
   onRenderOfFailure = () => (
-    <div className="job-details-failure-container">
-      <div className="job-details-failure-content-container">
+    <div className="job-item-details-failure-container">
+      <div className="job-item-details-failure-content-container">
         <img
           src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
-          alt=""
+          alt="failure view"
           className="failure-details-image"
         />
-        <h1 className="failure-details-heading">Oops! Something Went Wrong</h1>
-        <p className="failure-details-description">
+        <h1 className="failure-item-details-heading">
+          Oops! Something Went Wrong
+        </h1>
+        <p className="failure-item-details-description">
           We cannot seem to find the page you are looking for
         </p>
+        <button
+          type="button"
+          className="item-details-failure-retry-button"
+          onClick={this.getUserDetails}
+        >
+          Retry
+        </button>
       </div>
     </div>
   )
 
   onRenderOfSuccess = () => {
-    const {
-      jobDetails,
-      similarJobs,
-      skills,
-      lifeAtCompany,
-      isApiSuccess,
-    } = this.state
-    console.log(jobDetails, similarJobs)
-
-    const {
-      id,
-      companyLogoUrl,
-      companyWebsiteUrl,
-      employmentType,
-      jobDescription,
-
-      location,
-      packagePerAnnum,
-      rating,
-    } = jobDetails
+    const {jobDetails, similarJobs, skills, lifeAtCompany} = this.state
 
     const {description, lifeImageURl} = lifeAtCompany
 
@@ -113,7 +101,7 @@ class JobItemDetails extends Component {
   }
 
   onFailure = () => {
-    this.setState({isApiSuccess: false, isStatus: false})
+    this.setState({isStatus: 'FAILURE'})
   }
 
   onSuccess = async response => {
@@ -151,12 +139,13 @@ class JobItemDetails extends Component {
       similarJobs,
       skills: updatedJobDetails.skills,
       lifeAtCompany: updatedLifeAtCompany,
-      isApiSuccess: true,
+
       isStatus: statusConstants.success,
     })
   }
 
   getUserDetails = async () => {
+    this.setState({isStatus: statusConstants.loading})
     const {match} = this.props
     const {params} = match
     console.log(params)
@@ -169,6 +158,7 @@ class JobItemDetails extends Component {
     }
 
     const response = await fetch(url, options)
+    console.log(response)
 
     if (response.ok === true) {
       this.onSuccess(response)
@@ -198,32 +188,6 @@ class JobItemDetails extends Component {
   }
 
   render() {
-    const {
-      jobDetails,
-      similarJobs,
-      skills,
-      lifeAtCompany,
-      isApiSuccess,
-    } = this.state
-    console.log(jobDetails, similarJobs)
-
-    const {
-      id,
-      companyLogoUrl,
-      companyWebsiteUrl,
-      employmentType,
-      jobDescription,
-
-      location,
-      packagePerAnnum,
-      rating,
-    } = jobDetails
-
-    const {description, lifeImageURl} = lifeAtCompany
-
-    console.log(jobDetails)
-    console.log(skills)
-
     return (
       <>
         <Header />

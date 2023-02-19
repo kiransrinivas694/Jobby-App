@@ -1,4 +1,3 @@
-import {Link} from 'react-router-dom'
 import {AiFillStar} from 'react-icons/ai'
 import {MdLocationOn} from 'react-icons/md'
 import {BsBriefcaseFill} from 'react-icons/bs'
@@ -13,13 +12,15 @@ const CloneOfJobItemWithoutLinkAndLIElement = props => {
     companyLogoUrl,
     companyWebsiteUrl,
     employmentType,
-    id,
+
     jobDescription,
     location,
     rating,
     title,
     packagePerAnnum,
   } = jobDetails
+  console.log('....')
+  console.log(title)
 
   return (
     <>
@@ -28,7 +29,9 @@ const CloneOfJobItemWithoutLinkAndLIElement = props => {
           src={companyLogoUrl}
           alt="job details company logo"
           className="job-item-image"
+          value={title}
         />
+
         <div className="jobs-item-title-and-rating-container">
           <p className="job-item-title">{title}</p>
           <div className="job-item-rating-and-star">

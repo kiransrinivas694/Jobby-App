@@ -15,6 +15,10 @@
   border: none;
 }
 
+.nav-list-items {
+  list-style-type: none;
+}
+
 .nav-items {
   text-decoration: none;
   color: white;
@@ -25,6 +29,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-left: 0px;
 }
 
 @media screen and (max-width: 768px) {

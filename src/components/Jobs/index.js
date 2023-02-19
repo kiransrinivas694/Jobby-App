@@ -4,7 +4,8 @@ import Loader from 'react-loader-spinner'
 import {BsSearch} from 'react-icons/bs'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import JobItem from '../JobItem'
-
+import EmploymentTypeList from '../EmployementTypeList'
+import SalaryTypeList from '../SalaryTypeList'
 import Header from '../Header'
 import './index.css'
 
@@ -82,9 +83,6 @@ class Jobs extends Component {
     const {employmentChecked} = this.state
     const isChecked = event.target.checked
     const isEmploymentType = event.target.name
-    console.log(isChecked)
-    console.log(isEmploymentType)
-    console.log(employmentChecked)
 
     if (isChecked === true) {
       const newEmploymentChecked = [...employmentChecked, isEmploymentType]
@@ -124,10 +122,10 @@ class Jobs extends Component {
   }
 
   onGetJobsList = async () => {
+    this.setState({isGetJobsSuccess: statusConstants.loading})
     const {
       searchText,
-      employmentChecks,
-      salaryChecks,
+
       employmentChecked,
       salaryChecked,
     } = this.state
@@ -153,6 +151,7 @@ class Jobs extends Component {
   }
 
   onGetUserDetails = async () => {
+    this.setState({isGetUserDetails: statusConstants.loading})
     const jwtToken = Cookies.get('jwt_token')
     const url = 'https://apis.ccbp.in/profile'
     const options = {
@@ -186,7 +185,7 @@ class Jobs extends Component {
     return (
       <div className="profile-details-container">
         <img src={profileImageUrl} alt="profile" className="user-image" />
-        <p className="users-name">{name}</p>
+        <h1 className="users-name">{name}</h1>
         <p className="users-bio">{shortBio}</p>
       </div>
     )
@@ -199,7 +198,7 @@ class Jobs extends Component {
         alt="no jobs"
         className="no-jobs-image"
       />
-      <p className="no-jobs-text">No Jobs Found</p>
+      <h1 className="no-jobs-text">No Jobs Found</h1>
       <p className="no-jobs-description">
         We could not find any jobs. Try other filters
       </p>
@@ -230,8 +229,8 @@ class Jobs extends Component {
   }
 
   onRenderOfSuccessOf = () => {
-    const {jobsList, isGetJobsSuccess} = this.state
-    let isJobsPresent
+    const {jobsList} = this.state
+
     if (jobsList.length === 0) {
       return this.onNoJobsFound()
     }
@@ -250,6 +249,13 @@ class Jobs extends Component {
         <p className="failure-details-description">
           We cannot seem to find the page you are looking for
         </p>
+        <button
+          type="button"
+          className="retry-button-in-get-jobs"
+          onClick={this.onGetJobsList}
+        >
+          Retry
+        </button>
       </div>
     </div>
   )
@@ -277,7 +283,7 @@ class Jobs extends Component {
   )
 
   onJobListLoading = () => (
-    <div className="loader-container-jobs-list" data-testid="loader">
+    <div className="loader-container-jobs-list">
       <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
     </div>
   )
@@ -302,7 +308,7 @@ class Jobs extends Component {
       case statusConstants.success:
         return this.onRenderOfSuccessOf()
       case statusConstants.failure:
-        return this.onRenderOfFailure()
+        return this.onRenderOfFailureOf()
       case statusConstants.loading:
         return this.onJobListLoading()
       default:
@@ -311,14 +317,7 @@ class Jobs extends Component {
   }
 
   render() {
-    const {
-      jobsList,
-      searchInput,
-      searchText,
-      salaryChecked,
-      isGetJobsSuccess,
-      isGetUserDetails,
-    } = this.state
+    const {searchInput} = this.state
 
     return (
       <>
@@ -347,39 +346,27 @@ class Jobs extends Component {
               {this.getUserDetails()}
               <hr className="separator" />
               <div>
-                <p className="type-of-employment-text">Type of Employment</p>
+                <h1 className="type-of-employment-text">Type of Employment</h1>
                 <ul className="employment-types-container">
                   {employmentTypesList.map(each => (
-                    <li className="list-item">
-                      <input
-                        type="checkbox"
-                        id={each.employmentTypeId}
-                        name={each.employmentTypeId}
-                        onChange={this.onEmploymentChange}
-                      />
-                      <label htmlFor={each.employmentTypeId} className="label">
-                        {each.label}
-                      </label>
-                    </li>
+                    <EmploymentTypeList
+                      details={each}
+                      key={each.employmentTypeId}
+                      onEmploymentChange={this.onEmploymentChange}
+                    />
                   ))}
                 </ul>
               </div>
               <hr className="separator" />
               <div>
-                <p className="type-of-employment-text">Salary Range</p>
+                <h1 className="type-of-employment-text">Salary Range</h1>
                 <ul className="employment-types-container">
                   {salaryRangesList.map(each => (
-                    <li className="list-item">
-                      <input
-                        type="checkbox"
-                        id={each.salaryRangeId}
-                        name={each.salaryRangeId}
-                        onChange={this.onSalaryInputChange}
-                      />
-                      <label htmlFor={each.salaryRangeId} className="label">
-                        {each.label}
-                      </label>
-                    </li>
+                    <SalaryTypeList
+                      details={each}
+                      key={each.salaryRangeId}
+                      onSalaryInputChange={this.onSalaryInputChange}
+                    />
                   ))}
                 </ul>
               </div>
@@ -387,7 +374,7 @@ class Jobs extends Component {
             <div className="jobs-list-right-container">
               <div className="right-bar-input-container">
                 <input
-                  type="text"
+                  type="search"
                   placeholder="Search"
                   className="jobs-search-input"
                   onBlur={this.onBlurOfInput}

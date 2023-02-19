@@ -21,14 +21,18 @@ const Header = props => {
           alt="website logo"
         />
       </Link>
-      <div className="nav-items-container">
+      <ul className="nav-items-container">
         <Link to="/" className="nav-items">
-          <p>Home</p>
+          <li className="nav-list-items">
+            <p>Home</p>
+          </li>
         </Link>
         <Link to="/jobs" className="nav-items">
-          <p>Jobs</p>
+          <li className="nav-list-items">
+            <p>Jobs</p>
+          </li>
         </Link>
-      </div>
+      </ul>
       <div className="nav-logout-container">
         <button type="button" className="logout-button" onClick={onLogoutClick}>
           Logout
